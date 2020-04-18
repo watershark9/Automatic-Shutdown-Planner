@@ -1,50 +1,38 @@
-# -*- coding: utf-8 -*-
+from PyQt5 import QtWidgets, uic, QtCore
+import sys
+import main as function
 
-# Form implementation generated from reading ui file 'v1.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.2
-#
-# WARNING! All changes made in this file will be lost!
+ui_file = r'v1 interface.ui'
 
+class Ui(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Ui, self).__init__()
+        uic.loadUi(ui_file, self)
+        
+        self.names = ['time_input', 'shutdown_button', 'abort_button']
+        
+        #Date Time Input:
+        self.input1 = self.findChild(QtWidgets.QDateTimeEdit, self.names[0])
+        self.present = QtCore.QDateTime.currentDateTime()
+        self.input1.setMinimumDateTime( self.present )
+        #Shutdown Button:
+        self.button = self.findChild(QtWidgets.QPushButton, self.names[1])
+        self.button.clicked.connect( self.sendDateandTime )
+        #Abort Shutdown
+        self.button2 = self.findChild(QtWidgets.QPushButton, self.names[2])
+        self.button2.clicked.connect( function.abort_shutdown_procedure )
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+        self.show()
+        
+    def sendDateandTime(self):
+        input = self.findChild(QtWidgets.QDateTimeEdit, self.names[0]) # Date and Time Input
+        input = input.dateTime()
+        input = input.toPyDateTime()
+        function.shutdown_procedure( input )
 
+def run_window():
+    app = QtWidgets.QApplication(sys.argv)
+    window = Ui()
+    app.exec_()
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(286, 62)
-        self.verticalLayoutWidget = QtWidgets.QWidget(Form)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 0, 265, 55))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
-        self.label.setObjectName("label")
-        self.horizontalLayout.addWidget(self.label)
-        self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.verticalLayoutWidget)
-        self.dateTimeEdit.setObjectName("dateTimeEdit")
-        self.horizontalLayout.addWidget(self.dateTimeEdit)
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.pushButton_2 = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout_2.addWidget(self.pushButton_2)
-        self.pushButton = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_2.addWidget(self.pushButton)
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-
-    def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "Time to shutdown system:"))
-        self.pushButton_2.setText(_translate("Form", "Abort Shutdown"))
-        self.pushButton.setText(_translate("Form", "Queue Shutdown"))
+run_window()

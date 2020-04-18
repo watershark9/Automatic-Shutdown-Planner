@@ -26,28 +26,28 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label1">
         <property name="text">
          <string>Time to shutdown system:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+       <widget class="QDateTimeEdit" name="time_input"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="abort_button">
         <property name="text">
          <string>Abort Shutdown</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="shutdown_button">
         <property name="text">
          <string>Queue Shutdown</string>
         </property>
