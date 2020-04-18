@@ -9,7 +9,7 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi(ui_file, self)
         
-        self.names = ['time_input', 'shutdown_button', 'abort_button']
+        self.names = ['time_input', 'shutdown_button', 'abort_button', 'StatusLabel']
         
         #Date Time Input:
         self.input1 = self.findChild(QtWidgets.QDateTimeEdit, self.names[0])
@@ -20,15 +20,26 @@ class Ui(QtWidgets.QMainWindow):
         self.button.clicked.connect( self.sendDateandTime )
         #Abort Shutdown
         self.button2 = self.findChild(QtWidgets.QPushButton, self.names[2])
-        self.button2.clicked.connect( function.abort_shutdown_procedure )
+        self.button2.clicked.connect( self.abort )
 
         self.show()
         
     def sendDateandTime(self):
-        input = self.findChild(QtWidgets.QDateTimeEdit, self.names[0]) # Date and Time Input
+        # Date and Time Input
+        input = self.findChild(QtWidgets.QDateTimeEdit, self.names[0])
         input = input.dateTime()
         input = input.toPyDateTime()
-        function.shutdown_procedure( input )
+        self.changeStatusLabel( function.shutdown_procedure( input ) ) #changes label and executes function
+
+    def abort(self):
+        #Aborting
+        function.abort_shutdown_procedure
+        #Label
+        self.changeStatusLabel( str('Shutdown Aborted') )
+    
+    def changeStatusLabel(self, new_text):
+        label = self.findChild(QtWidgets.QLabel, self.names[3])
+        label.setText( new_text )
 
 def run_window():
     app = QtWidgets.QApplication(sys.argv)
