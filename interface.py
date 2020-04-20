@@ -9,7 +9,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtWidgets, uic
-import sys
 import main as function
 
 
@@ -96,7 +95,9 @@ class Ui_Form(object):
         label.setText( new_text )
     #Custom Code End
 
+function.startup_script()
 print('Interface Started')
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

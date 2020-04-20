@@ -1,5 +1,6 @@
 import system_functions as sf
 import datetime
+import platform
 
 def shutdown_procedure(input_time):
     present = datetime.datetime.now()
@@ -13,3 +14,20 @@ def shutdown_procedure(input_time):
 
 def abort_shutdown_procedure():
     sf.abortShutdown()
+
+def is_OS_Valid(os):
+    valid_os_list = [
+        'Windows'
+    ]
+    if os == valid_os_list[0]:
+        return True
+    else:
+        return False
+
+def validate_OS():
+    if is_OS_Valid( platform.system() ) == False:
+        import sys
+        sys.exit("Not valid OS")
+
+def startup_script():
+    validate_OS()
